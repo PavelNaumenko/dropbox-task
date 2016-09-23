@@ -1,10 +1,11 @@
 import Dropbox from 'dropbox';
+import config from 'config';
 
-export default class FileController {
+class FileController {
 	
-	constructor(token) {
+	constructor() {
 
-		this.dropbox = new Dropbox({ accessToken: token });
+		this.dropbox = new Dropbox({ accessToken: config.dropbox.accessToken });
 		
 	}
 	
@@ -97,3 +98,5 @@ export default class FileController {
 	}
 	
 }
+
+export default new FileController();

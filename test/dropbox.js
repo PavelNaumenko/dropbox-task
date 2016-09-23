@@ -1,11 +1,9 @@
 import { expect } from 'chai';
-import FileController from '../dropbox/dropbox';
+import controller from '../dropbox/dropbox';
 import fs from 'fs';
 import path from 'path';
 
 describe('dropbox', () => {
-
-	let controller = new FileController('8pR1Xr-gXoAAAAAAAAAADW6vx6dRX-_HqrHAneDNK4H8PE5awKTokQqLT4txX62Y');
 
 	before((done) => {
 
@@ -27,7 +25,7 @@ describe('dropbox', () => {
 	describe('#listFolder()', () => {
 
 		it('should return files', (done) => {
-			
+
 			controller.listFolder({ path: '/test' })
 				.then((data) => {
 

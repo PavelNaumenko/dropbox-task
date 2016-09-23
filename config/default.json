@@ -1,0 +1,9 @@
+{
+
+  "dropbox": {
+    "accessToken": "8pR1Xr-gXoAAAAAAAAAADW6vx6dRX-_HqrHAneDNK4H8PE5awKTokQqLT4txX62Y"
+  },
+
+  "DATABASE" : "mongodb://localhost/dropBoxTask"
+
+}
