@@ -3,6 +3,8 @@ import dropbox from '../dropbox/dropbox';
 import dbDriver from '../drivers/dbDriver';
 import mongoose from 'mongoose';
 import config from 'config';
+import fs from 'fs';
+import path from 'path';
 
 let file = new dbDriver('fileSchema');
 
@@ -33,7 +35,7 @@ class FileController {
 				})
 				.then(() => {
 					
-					resolve({ data: dataFile, userName: name });
+					resolve({ file: dataFile, userName: name });
 					
 				})
 				.catch((error) => {
@@ -88,7 +90,7 @@ class FileController {
 				})
 				.then((data) => {
 
-					resolve({ data: dataFile, userName: data.name || dataFile.name });
+					resolve({ file: dataFile, userName: data.name || dataFile.name });
 
 				})
 				.catch((error) => {
@@ -97,6 +99,30 @@ class FileController {
 
 				});
 
+		});
+
+	}
+
+	downloadPDFAndSave(arg) {
+
+		return new Promise((resolve, reject) => {
+			
+			this.download(arg)
+				.then((data) => {
+
+					fs.writeFile(path.join(__dirname, './work begin2.pdf'), data.file.fileBinary, 'binary', (err, data) => {
+
+						err ? reject(err) : resolve();
+
+					});
+					
+				})
+				.catch((error) => {
+					
+					reject(error);
+					
+				});
+			
 		});
 
 	}
@@ -116,7 +142,7 @@ class FileController {
 				})
 				.then((data) => {
 
-					resolve({ data: dataFile, userName: data.name || dataFile.name });
+					resolve({ file: dataFile, userName: data.name || dataFile.name });
 
 				})
 				.catch((error) => {
@@ -144,7 +170,7 @@ class FileController {
 				})
 				.then((data) => {
 
-					resolve({ data: dataFile, userName: data.name || dataFile.name });
+					resolve({ file: dataFile, userName: data.name || dataFile.name });
 
 				})
 				.catch((error) => {
@@ -234,7 +260,7 @@ class FileController {
 			
 			let elem = {};
 
-			elem.data = item.dropboxFile;
+			elem.file = item.dropboxFile;
 
 			elem.userName = item.dbFile ? item.dbFile.name : item.dropboxFile.name;
 			
@@ -252,75 +278,97 @@ export default new FileController();
 
 let contr = new FileController();
 
-mongoose.connect(config.DATABASE, (error) => {
-
-	if (error) {
-
-		console.log(`Error: ${error}`);
-
-	} else {
-
-		console.log('//        Connected to API db        //');
-		// contr.createFile({ path: '/test/test.txt', contents: 'Hello, world' })
-		// 	.then((data) => {
-        //
-		// 		console.log(data);
-        //
-		// 	})
-		// 	.catch((err) => {
-        //
-		// 		console.log(err);
-        //
-		// 	});
-
-		// contr.listFolder({ path: '/test' })
-		// 	.then((data) => {
-        //
-		// 		console.log(data);
-        //
-		// 	})
-		// 	.catch((err) => {
-        //
-		// 		console.log(err);
-        //
-		// 	});
-
-		// contr.downloadFile({ path: '/test/c0465740-80da-11e6-aa21-c921a4202b57.txt' })
-		// 	.then((data) => {
-        //
-		// 		console.log(data);
-        //
-		// 	})
-		// 	.catch((err) => {
-        //
-		// 		console.log(err);
-        //
-		// 	});
-
-		// contr.updateFile({ path: '/test/c0465740-80da-11e6-aa21-c921a4202b57.txt', contents: 'Hello, world! I update you' })
-		// 	.then((data) => {
-        //
-		// 		console.log(data);
-        //
-		// 	})
-		// 	.catch((err) => {
-        //
-		// 		console.log(err);
-        //
-		// 	});
-
-		// contr.deleteFile({ path: '/test/c0465740-80da-11e6-aa21-c921a4202b57.txt' })
-		// 	.then((data) => {
-        //
-		// 		console.log(data);
-        //
-		// 	})
-		// 	.catch((err) => {
-        //
-		// 		console.log(err);
-        //
-		// 	});
-
-	}
-
-});
+// mongoose.connect(config.DATABASE, (error) => {
+//
+// 	if (error) {
+//
+// 		console.log(`Error: ${error}`);
+//
+// 	} else {
+//
+// 		console.log('//        Connected to API db        //');
+// 		// contr.createFile({ path: '/test/test.txt', contents: 'Hello, world' })
+// 		// 	.then((data) => {
+//         //
+// 		// 		console.log(data);
+//         //
+// 		// 	})
+// 		// 	.catch((err) => {
+//         //
+// 		// 		console.log(err);
+//         //
+// 		// 	});
+//
+// 		// contr.listFolder({ path: '/test' })
+// 		// 	.then((data) => {
+//         //
+// 		// 		console.log(data);
+//         //
+// 		// 	})
+// 		// 	.catch((err) => {
+//         //
+// 		// 		console.log(err);
+//         //
+// 		// 	});
+//
+// 		// contr.downloadFile({ path: '/test/9cb6a360-80e5-11e6-a15f-5fb98c9538ae.txt' })
+// 		// 	.then((data) => {
+//         //
+// 		// 		console.log(data);
+//         //
+// 		// 	})
+// 		// 	.catch((err) => {
+//         //
+// 		// 		console.log(err);
+//         //
+// 		// 	});
+//
+// 		// contr.updateFile({ path: '/test/c0465740-80da-11e6-aa21-c921a4202b57.txt', contents: 'Hello, world! I update you' })
+// 		// 	.then((data) => {
+//         //
+// 		// 		console.log(data);
+//         //
+// 		// 	})
+// 		// 	.catch((err) => {
+//         //
+// 		// 		console.log(err);
+//         //
+// 		// 	});
+//
+// 		// contr.deleteFile({ path: '/test/c0465740-80da-11e6-aa21-c921a4202b57.txt' })
+// 		// 	.then((data) => {
+//         //
+// 		// 		console.log(data);
+//         //
+// 		// 	})
+// 		// 	.catch((err) => {
+//         //
+// 		// 		console.log(err);
+//         //
+// 		// 	});
+//
+// 		fs.readFile(path.join(__dirname, './picture.jpeg'), 'utf8', (err, contents) => {
+//
+// 			if (err) {
+//
+// 				console.log(err);
+//
+// 			}
+//
+// 			contr.createFile({ path: '/test/picture.jpeg', contents })
+// 				.then((data) => {
+//
+// 					console.log(data);
+//
+// 				})
+// 				.catch((err) => {
+//
+// 					console.log(err);
+//
+// 				});
+//
+// 		});
+//
+// 	}
+//
+// });
