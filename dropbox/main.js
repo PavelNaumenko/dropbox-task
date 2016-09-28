@@ -53,22 +53,22 @@ import path from 'path';
 //
 // 	});
 
-controller.download({ path: '/test/work begin.pdf' })
-	.then((data) => {
-
-		console.log(data.fileBinary);
-		fs.writeFile(path.join(__dirname, './work begin2.pdf'), data.fileBinary, 'binary', (err, data) => {
-
-			err ? console.log(err) : console.log(data);
-
-		});
-
-	})
-	.catch((err) => {
-
-		console.log(err);
-
-	});
+// controller.download({ path: '/test/work begin.pdf' })
+// 	.then((data) => {
+//
+// 		console.log(data.fileBinary);
+// 		fs.writeFile(path.join(__dirname, './work begin2.pdf'), data.fileBinary, 'binary', (err, data) => {
+//
+// 			err ? console.log(err) : console.log(data);
+//
+// 		});
+//
+// 	})
+// 	.catch((err) => {
+//
+// 		console.log(err);
+//
+// 	});
 
 // controller.upload({
 // 	path: '/file.txt',
@@ -96,3 +96,15 @@ controller.download({ path: '/test/work begin.pdf' })
 // 		console.log(error);
 //
 // 	});
+
+controller.createSharedLink({ path: '/test/work begin.pdf', short_url: false })
+	.then((data) => {
+
+		console.log(data);
+
+	})
+	.catch((error) => {
+
+		console.log(error);
+
+	});

@@ -96,6 +96,26 @@ class FileController {
 		});
 
 	}
+
+	createSharedLink(arg) {
+
+		return new Promise((resolve, reject) => {
+
+			this.dropbox.sharingCreateSharedLink(arg)
+				.then((data) => {
+
+					resolve(data);
+
+				})
+				.catch((err) => {
+
+					reject(err);
+
+				});
+
+		});
+
+	}
 	
 }
 
