@@ -325,6 +325,34 @@ class FileController {
 
 	}
 
+	move(arg) {
+
+		return new Promise((resolve, reject) => {
+
+			let dataFile;
+
+			dropbox.move(arg)
+				.then((data) => {
+
+					dataFile = data;
+					return this.findOne({ uuid: data.name });
+
+				})
+				.then((data) => {
+
+					resolve({ file: dataFile, customName: data.name || dataFile.name });
+
+				})
+				.catch((error) => {
+
+					reject(error);
+
+				});
+
+		});
+
+	}
+
 }
 
 export default new FileController();
@@ -339,7 +367,7 @@ let contr = new FileController();
 //
 // 	} else {
 //
-// 		console.log('//        Connected to API db        //');
+// 		// console.log('//        Connected to API db        //');
 // 		// contr.createFile({ path: '/test/test.txt', contents: 'Hello, world' })
 // 		// 	.then((data) => {
 //         //
@@ -400,27 +428,27 @@ let contr = new FileController();
 //         //
 // 		// 	});
 //
-// 		fs.readFile(path.join(__dirname, './picture.jpeg'), 'utf8', (err, contents) => {
-//
-// 			if (err) {
-//
-// 				console.log(err);
-//
-// 			}
-//
-// 			contr.createFile({ path: '/test/picture.jpeg', contents })
-// 				.then((data) => {
-//
-// 					console.log(data);
-//
-// 				})
-// 				.catch((err) => {
-//
-// 					console.log(err);
-//
-// 				});
-//
-// 		});
+// 		// fs.readFile(path.join(__dirname, './picture.jpeg'), 'utf8', (err, contents) => {
+//         //
+// 		// 	if (err) {
+//         //
+// 		// 		console.log(err);
+//         //
+// 		// 	}
+//         //
+// 		// 	contr.createFile({ path: '/test/picture.jpeg', contents })
+// 		// 		.then((data) => {
+//         //
+// 		// 			console.log(data);
+//         //
+// 		// 		})
+// 		// 		.catch((err) => {
+//         //
+// 		// 			console.log(err);
+//         //
+// 		// 		});
+//         //
+// 		// });
 //
 // 	}
 //

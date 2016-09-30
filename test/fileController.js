@@ -33,7 +33,7 @@ describe('fileController', () => {
 
 	after((done) => {
 
-		let p2 = fileController.deleteFile({ path: `/test/${file2Id}` });
+		let p2 = fileController.deleteFile({ path: `/test2/${file2Id}` });
 		let p3 = fileController.deleteFile({ path: `/test/${file3Id}` });
 		let p4 = fileController.deleteFile({ path: `/test/${file4Id}` });
 		let p5 = fileController.deleteFolder({ path: '/test2' });
@@ -374,6 +374,32 @@ describe('fileController', () => {
 				.then((data) => {
 
 					expect(data.name).to.be.equal('test2');
+					done();
+
+				})
+				.catch((error) => {
+
+					done(error);
+
+				});
+
+		});
+
+	});
+
+	describe('#move()', () => {
+
+		it('should return name of moved file', (done) => {
+
+			fileController.move(
+				{
+					from_path: `/test/${file2Id}`,
+					to_path: `/test2/${file2Id}`
+				})
+				.then((data) => {
+
+					expect(data.file.name).to.be.equal(file2Id);
+					expect(data.customName).to.be.equal('hello.txt');
 					done();
 
 				})

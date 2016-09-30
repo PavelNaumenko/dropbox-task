@@ -81,7 +81,6 @@ import path from 'path';
 // 	.catch((err) => {
 //
 // 		console.log(err);
-//         console.log(err.response.res.statusMessage);
 //
 // 	});
 
@@ -97,14 +96,14 @@ import path from 'path';
 //
 // 	});
 
-controller.createSharedLink({ path: '/test/work begin.pdf', short_url: false })
-	.then((data) => {
-
-		console.log(data);
-
-	})
-	.catch((error) => {
-
-		console.log(error);
-
-	});
+// controller.createSharedLink({ path: '/test/work begin.pdf', short_url: false })
+// 	.then((data) => {
+//
+// 		console.log(data);
+//
+// 	})
+// 	.catch((error) => {
+//
+// 		console.log(error);
+//
+// 	});

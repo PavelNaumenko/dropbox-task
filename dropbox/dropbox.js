@@ -136,6 +136,26 @@ class FileController {
 		});
 
 	}
+
+	move(arg) {
+
+		return new Promise((resolve, reject) => {
+
+			this.dropbox.filesMove(arg)
+				.then((data) => {
+
+					resolve(data);
+
+				})
+				.catch((error) => {
+
+					reject(error);
+
+				});
+
+		});
+
+	}
 	
 }
 
