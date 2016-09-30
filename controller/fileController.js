@@ -35,7 +35,7 @@ class FileController {
 				})
 				.then(() => {
 					
-					resolve({ file: dataFile, userName: name });
+					resolve({ file: dataFile, customName: name });
 					
 				})
 				.catch((error) => {
@@ -90,7 +90,7 @@ class FileController {
 				})
 				.then((data) => {
 
-					resolve({ file: dataFile, userName: data.name || dataFile.name });
+					resolve({ file: dataFile, customName: data.name || dataFile.name });
 
 				})
 				.catch((error) => {
@@ -142,7 +142,7 @@ class FileController {
 				})
 				.then((data) => {
 
-					resolve({ file: dataFile, userName: data.name || dataFile.name });
+					resolve({ file: dataFile, customName: data.name || dataFile.name });
 
 				})
 				.catch((error) => {
@@ -170,7 +170,7 @@ class FileController {
 				})
 				.then((data) => {
 
-					resolve({ file: dataFile, userName: data.name || dataFile.name });
+					resolve({ file: dataFile, customName: data.name || dataFile.name });
 
 				})
 				.catch((error) => {
@@ -262,7 +262,7 @@ class FileController {
 
 			elem.file = item.dropboxFile;
 
-			elem.userName = item.dbFile ? item.dbFile.name : item.dropboxFile.name;
+			elem.customName = item.dbFile ? item.dbFile.name : item.dropboxFile.name;
 			
 			list.push(elem);
 			
@@ -310,6 +310,18 @@ class FileController {
 				});
 
 		});
+
+	}
+
+	createFolder(arg) {
+
+		return dropbox.createFolder(arg);
+
+	}
+
+	deleteFolder(arg) {
+
+		return dropbox.remove(arg);
 
 	}
 

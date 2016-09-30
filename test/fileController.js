@@ -36,8 +36,9 @@ describe('fileController', () => {
 		let p2 = fileController.deleteFile({ path: `/test/${file2Id}` });
 		let p3 = fileController.deleteFile({ path: `/test/${file3Id}` });
 		let p4 = fileController.deleteFile({ path: `/test/${file4Id}` });
+		let p5 = fileController.deleteFolder({ path: '/test2' });
 
-		Promise.all([p2, p3, p4])
+		Promise.all([p2, p3, p4, p5])
 			.then(() => {
 
 				done();
@@ -60,7 +61,7 @@ describe('fileController', () => {
 
 					fileId = data.file.name;
 					expect(data.file).to.have.property('size', 13);
-					expect(data).to.have.property('userName', 'hello.txt');
+					expect(data).to.have.property('customName', 'hello.txt');
 					done();
 
 				})
@@ -96,7 +97,7 @@ describe('fileController', () => {
 
 					file2Id = data.file.name;
 					expect(data.file).to.have.property('size', 17);
-					expect(data).to.have.property('userName', 'hello.txt');
+					expect(data).to.have.property('customName', 'hello.txt');
 					expect(fileId).to.not.equal(file2Id);
 					done();
 
@@ -124,7 +125,7 @@ describe('fileController', () => {
 
 						file3Id = data.file.name;
 						expect(data.file).to.have.property('size', 45941);
-						expect(data).to.have.property('userName', 'trolltunga.jpg');
+						expect(data).to.have.property('customName', 'trolltunga.jpg');
 						done();
 			
 					})
@@ -153,7 +154,7 @@ describe('fileController', () => {
 
 						file4Id = data.file.name;
 						expect(data.file).to.have.property('size', 1197735);
-						expect(data).to.have.property('userName', 'work begin.pdf');
+						expect(data).to.have.property('customName', 'work begin.pdf');
 						done();
 
 					})
@@ -191,17 +192,17 @@ describe('fileController', () => {
 
 		});
 
-		it('should return user name', (done) => {
+		it('should return custom name', (done) => {
 
-			let userName;
+			let customName;
 
 			list.forEach((item) => {
 
-				(item.file.name == fileId) ? userName = item.userName : true;
+				(item.file.name == fileId) ? customName = item.customName : true;
 
 			});
 
-			expect(userName).to.be.equal('hello.txt');
+			expect(customName).to.be.equal('hello.txt');
 
 			done();
 
@@ -217,7 +218,7 @@ describe('fileController', () => {
 				.then((data) => {
 					
 					expect(data.file).to.have.property('fileBinary', 'Hello, world!');
-					expect(data).to.have.property('userName', 'hello.txt');
+					expect(data).to.have.property('customName', 'hello.txt');
 					done();
 					
 				})
@@ -235,7 +236,7 @@ describe('fileController', () => {
 				.then((data) => {
 
 					expect(data.file).to.have.property('fileBinary');
-					expect(data).to.have.property('userName', 'trolltunga.jpg');
+					expect(data).to.have.property('customName', 'trolltunga.jpg');
 					expect(data.file).to.have.property('size', 45941);
 					done();
 
@@ -254,7 +255,7 @@ describe('fileController', () => {
 				.then((data) => {
 
 					expect(data.file).to.have.property('fileBinary');
-					expect(data).to.have.property('userName', 'work begin.pdf');
+					expect(data).to.have.property('customName', 'work begin.pdf');
 					expect(data.file).to.have.property('size', 1197735);
 					done();
 
@@ -281,7 +282,7 @@ describe('fileController', () => {
 				.then((data) => {
 
 					expect(data.file).to.have.property('size', 27);
-					expect(data).to.have.property('userName', 'hello.txt');
+					expect(data).to.have.property('customName', 'hello.txt');
 					done();
 
 				})
@@ -302,7 +303,7 @@ describe('fileController', () => {
 			fileController.deleteFile({ path: `/test/${fileId}` })
 				.then((data) => {
 
-					expect(data).to.have.property('userName', 'hello.txt');
+					expect(data).to.have.property('customName', 'hello.txt');
 					done();
 
 				})
@@ -352,6 +353,27 @@ describe('fileController', () => {
 				.then((data) => {
 
 					expect(data.url).to.be.equal(fileLink);
+					done();
+
+				})
+				.catch((error) => {
+
+					done(error);
+
+				});
+
+		});
+
+	});
+
+	describe('#createFolder', () => {
+
+		it('should return name of created directory', (done) => {
+
+			fileController.createFolder({ path: '/test2' })
+				.then((data) => {
+
+					expect(data.name).to.be.equal('test2');
 					done();
 
 				})
