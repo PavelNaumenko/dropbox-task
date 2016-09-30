@@ -248,7 +248,7 @@ describe('fileController', () => {
 			
 		});
 
-		it('should download and save file to the server', (done) => {
+		it('should return pdf file', (done) => {
 
 			fileController.downloadFile({ path: `/test/${file4Id}` })
 				.then((data) => {
@@ -273,7 +273,11 @@ describe('fileController', () => {
 		
 		it('should return updated file', (done) => {
 			
-			fileController.updateFile({ path: `/test/${fileId}`, contents: 'Hello, world! I update you!' })
+			fileController.updateFile(
+				{
+					path: `/test/${fileId}`,
+					contents: 'Hello, world! I update you!'
+				})
 				.then((data) => {
 
 					expect(data.file).to.have.property('size', 27);
@@ -299,6 +303,55 @@ describe('fileController', () => {
 				.then((data) => {
 
 					expect(data).to.have.property('userName', 'hello.txt');
+					done();
+
+				})
+				.catch((error) => {
+
+					done(error);
+
+				});
+
+		});
+
+	});
+
+	describe('#createSharedLink', () => {
+
+		let sharedLink = 'https://www.dropbox.com/s/28bwm8cil1d8bec/work%20begin.pdf?dl=0';
+		let fileLink = 'https://www.dropbox.com/s/28bwm8cil1d8bec/work%20begin.pdf?dl=1';
+
+		it('should return shared link', (done) => {
+
+			fileController.createSharedLink(
+				{
+					path: '/test/work begin.pdf',
+					short_url: false
+				})
+				.then((data) => {
+
+					expect(data.url).to.be.equal(sharedLink);
+					done();
+
+				})
+				.catch((error) => {
+
+					done(error);
+
+				});
+
+		});
+
+		it('should return file link', (done) => {
+
+			fileController.createFileLink(
+				{
+					path: '/test/work begin.pdf',
+					short_url: false
+				})
+				.then((data) => {
+
+					expect(data.url).to.be.equal(fileLink);
 					done();
 
 				})

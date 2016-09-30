@@ -272,6 +272,47 @@ class FileController {
 		
 	}
 
+	createSharedLink(arg) {
+
+		return new Promise((resolve, reject) => {
+
+			dropbox.createSharedLink(arg)
+				.then((data) => {
+
+					resolve(data);
+
+				})
+				.catch((error) => {
+
+					reject(error);
+
+				});
+
+		});
+
+	}
+
+	createFileLink(arg) {
+
+		return new Promise((resolve, reject) => {
+
+			this.createSharedLink(arg)
+				.then((data) => {
+
+					data.url = `${data.url.slice(0,-1)}1`;
+					resolve(data);
+
+				})
+				.catch((error) => {
+
+					reject(error);
+
+				});
+
+		});
+
+	}
+
 }
 
 export default new FileController();
